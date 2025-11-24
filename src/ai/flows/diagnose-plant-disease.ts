@@ -29,10 +29,10 @@ const DiagnosePlantDiseaseOutputSchema = z.object({
   cureStepsTa: z.string().describe('The cure steps in Tamil.'),
   fertilizerRecommendationsEn: z
     .string()
-    .describe('Fertilizer recommendations in English.'),
+    .describe('A comma-separated list of specific, commercially available fertilizer product names to treat the detected issue. For example: "Miracle-Gro Water Soluble All Purpose Plant Food, NPK 20-20-20".'),
   fertilizerRecommendationsTa: z
     .string()
-    .describe('Fertilizer recommendations in Tamil.'),
+    .describe('Fertilizer recommendations in Tamil, listing specific commercial products.'),
 });
 export type DiagnosePlantDiseaseOutput = z.infer<typeof DiagnosePlantDiseaseOutputSchema>;
 
@@ -46,7 +46,7 @@ const prompt = ai.definePrompt({
   name: 'diagnosePlantDiseasePrompt',
   input: {schema: DiagnosePlantDiseaseInputSchema},
   output: {schema: DiagnosePlantDiseaseOutputSchema},
-  prompt: `You are an expert agronomist. Analyze the attached image of a plant. Detect any disease or deficiency. Return ONLY JSON: {disease_name_en, disease_name_ta, confidence, severity, cure_steps_en:, cure_steps_ta:, fertilizer_recommendations_en:, fertilizer_recommendations_ta:}.\n\n   Photo: {{media url=photoDataUri}}`,
+  prompt: `You are an expert agronomist. Analyze the attached image of a plant. Detect any disease or deficiency. For fertilizer recommendations, provide specific, commercially available product names that can be purchased online. Return ONLY JSON: {disease_name_en, disease_name_ta, confidence, severity, cure_steps_en:, cure_steps_ta:, fertilizer_recommendations_en:, fertilizer_recommendations_ta:}.\n\n   Photo: {{media url=photoDataUri}}`,
 });
 
 const diagnosePlantDiseaseFlow = ai.defineFlow(
