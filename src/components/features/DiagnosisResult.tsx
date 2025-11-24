@@ -22,13 +22,15 @@ const getSeverityVariant = (severity: string): 'destructive' | 'secondary' | 'de
 };
 
 const ecommercePlatforms = [
-    { name: 'Amazon', url: 'https://www.amazon.in/s?k=' },
+    { name: 'Amazon', url: 'https://www.amazon.in/s?k=', usePlusForSpaces: true },
     { name: 'Flipkart', url: 'https://www.flipkart.com/search?q=' },
     { name: 'IndiaMart', url: 'https://dir.indiamart.com/search.mp?ss=' },
 ];
 
 export function DiagnosisResult({ result }: DiagnosisResultProps) {
-  const searchQuery = encodeURIComponent(result.fertilizerRecommendationsEn.split(',')[0].trim());
+  const firstRecommendation = result.fertilizerRecommendationsEn.split(',')[0].trim();
+  const amazonSearchQuery = encodeURIComponent(firstRecommendation.replace(/ /g, '+'));
+  const defaultSearchQuery = encodeURIComponent(firstRecommendation);
 
   return (
     <Card className="animate-in fade-in-50">
@@ -87,16 +89,19 @@ export function DiagnosisResult({ result }: DiagnosisResultProps) {
                 Market Connect
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                {ecommercePlatforms.map(platform => (
-                     <Button asChild variant="outline" key={platform.name}>
-                        <Link href={`${platform.url}${searchQuery}`} target="_blank" rel="noopener noreferrer">
-                            Buy on {platform.name}
-                        </Link>
-                     </Button>
-                ))}
+                {ecommercePlatforms.map(platform => {
+                     const searchQuery = platform.usePlusForSpaces ? amazonSearchQuery : defaultSearchQuery;
+                     return (
+                        <Button asChild variant="outline" key={platform.name}>
+                            <Link href={`${platform.url}${searchQuery}`} target="_blank" rel="noopener noreferrer">
+                                Buy on {platform.name}
+                            </Link>
+                        </Button>
+                     );
+                })}
             </div>
             <p className="text-xs text-muted-foreground mt-2">
-                Search for '{result.fertilizerRecommendationsEn.split(',')[0].trim()}' on e-commerce sites. Prices and availability may vary.
+                Search for '{firstRecommendation}' on e-commerce sites. Prices and availability may vary.
             </p>
         </div>
 
