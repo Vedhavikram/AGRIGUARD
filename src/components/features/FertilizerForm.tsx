@@ -1,6 +1,7 @@
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { handleGetFertilizerRecs } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/ui/card";
@@ -33,7 +34,7 @@ function SubmitButton() {
 }
 
 export function FertilizerForm() {
-    const [state, formAction] = useFormState(handleGetFertilizerRecs, initialState);
+    const [state, formAction] = useActionState(handleGetFertilizerRecs, initialState);
 
     return (
         <div className="grid md:grid-cols-2 gap-8 items-start">
@@ -106,7 +107,7 @@ function LeafIcon(props: React.SVGProps<SVGSVGElement>) {
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
-      viewBox="0 0 24 24"
+      viewBox="0 0 24"
       fill="none"
       stroke="currentColor"
       strokeWidth="2"

@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useEffect, useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { handleReportPrice } from "@/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
+import { Loader2, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 
@@ -35,7 +35,7 @@ function SubmitButton() {
 }
 
 export function ReportPriceForm() {
-    const [state, formAction] = useFormState(handleReportPrice, initialState);
+    const [state, formAction] = useActionState(handleReportPrice, initialState);
     const { toast } = useToast();
 
     useEffect(() => {
