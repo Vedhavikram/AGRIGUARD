@@ -69,18 +69,15 @@ export function AppSidebar() {
         <SidebarMenu>
           {menuItems.map(item => (
             <SidebarMenuItem key={item.href}>
-              <Link href={item.href} legacyBehavior passHref>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname === item.href}
-                  tooltip={item.label}
-                >
-                  <a>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </a>
-                </SidebarMenuButton>
-              </Link>
+              <SidebarMenuButton
+                as={Link}
+                href={item.href}
+                isActive={pathname === item.href}
+                tooltip={item.label}
+              >
+                <item.icon />
+                <span>{item.label}</span>
+              </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
@@ -88,14 +85,10 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
             <SidebarMenuItem>
-                 <Link href="#" legacyBehavior passHref>
-                    <SidebarMenuButton asChild tooltip="Help & Support">
-                        <a>
-                            <HelpingHand/>
-                            <span>Help & Support</span>
-                        </a>
-                    </SidebarMenuButton>
-                 </Link>
+              <SidebarMenuButton as={Link} href="#" tooltip="Help & Support">
+                <HelpingHand/>
+                <span>Help & Support</span>
+              </SidebarMenuButton>
             </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
